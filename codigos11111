@@ -1,0 +1,629 @@
+//arreglo
+#include <iostream>
+#include <conio.h>
+using namespace std;
+
+int main(){
+
+    int numeros[100][100],filas,columas,i,j;
+    cout<<"Digite el numero de Filas: ";cin>>filas;
+     cout<<"Digite el numero de Columnas: ";cin>>columas;
+
+    //Rellenar la matriz
+    for(i=0;i<filas;i++){
+        for(j=0;j<columas;j++){
+            cout<<"Digite un numero ["<<i<<"]["<<j<<"]:"; cin>>numeros[i][j];
+        }
+    }
+    cout<<"\n";
+    //Mostrar la matriz en pantalla
+
+     for(i=0;i<filas;i++){
+        for(j=0;j<columas;j++){
+            cout<<numeros[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+
+     cout<<"\n Diagonal Principal"<<endl;
+
+     for(i=0;i<filas;i++){
+        for(j=0;j<columas;j++){
+                if(i==j)
+                {
+                    cout<<numeros[i][j]<<" ";
+                }
+        }
+    }
+
+
+    getch();
+    return 0;
+}
+//cadena
+#include <iostream>
+#include <conio.h>
+#include <stdlib.h>
+
+using namespace std;
+
+int main(){
+
+    char cadena[30];
+    cout<<"inserte una frase:";
+    cin.getline(cadena,30);
+    int i;
+    while(cadena[i]!='\0'){
+        cout<<cadena[i];
+        i++;
+    }
+
+
+getch();
+return 0;
+}
+//colas
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+struct nodo{
+    int nro;
+    struct nodo *sgte;
+    //struct nodo *Puntero;
+};
+
+typedef struct nodo *Puntero;
+
+class Cola{
+    public:
+        Cola(void);
+        void Encolar(int );
+        int Desencolar(void );
+        bool ColaVacia(void);
+        void MostrarCola(void);
+        void VaciarCola(void);
+
+    private:
+        Puntero delante;//puntero al primer elemento de la cola
+        Puntero atras;//puntero al ultimo elemento de la cola
+
+};
+
+
+Cola::Cola(void){
+    delante=NULL;//inicializamos los punteros
+    atras=NULL;
+}
+
+bool Cola::ColaVacia(){
+
+    if(delante==NULL)
+        return true;
+    else return false;
+}
+void Cola::Encolar(int x){
+
+     Puntero p_aux;
+
+     p_aux=new(struct nodo);
+     p_aux->nro=x;
+     p_aux->sgte=NULL;
+
+     if(delante==NULL)
+        delante=p_aux;
+     else atras->sgte=p_aux;
+
+     atras=p_aux;
+}
+
+int Cola::Desencolar(void){
+
+    int n;
+    Puntero p_aux;
+
+    p_aux=delante;
+    n=p_aux->nro;
+    delante=(delante)->sgte;
+    delete(p_aux);
+    return n;
+}
+
+void Cola::MostrarCola(void){
+    Puntero p_aux;
+     p_aux=delante;
+     while(p_aux!=NULL){
+        cout<<"\n\n\t"<<p_aux->nro;
+        p_aux=p_aux->sgte;
+     }
+
+}
+
+void Cola::VaciarCola(void){
+
+     Puntero p_aux,r_aux;
+     p_aux=delante;
+     while(p_aux!=NULL){
+        r_aux=p_aux;
+        p_aux=p_aux->sgte;
+        delete(r_aux);
+     }
+     delante=NULL;
+     atras=NULL;
+}
+
+int menu(void)
+{
+    cout<<"\n\n\t -------------------------------------------\n";
+    cout<<"\t|        IMPLEMENTACION DE UNA COLA         |\n";
+    cout<<"\t|-------------------------------------------|\n";
+    cout<<" \t|                                           |"<<endl;
+    cout<<" \t|  1. ENCOLAR                               |"<<endl;
+    cout<<" \t|  2. DESENCOLAR                            |"<<endl;
+    cout<<" \t|  3. MOSTRAR COLA                          |"<<endl;
+    cout<<" \t|  4. VACIAR COLA                           |"<<endl;
+    cout<<" \t|  5. SALIR                                 |"<<endl;
+    cout<<" \t|                                           |"<<endl;
+    cout<<"\t -------------------------------------------\n";
+    cout<<"\t Ingrese opcion: ";
+}
+int main(void ){
+
+    system("color 1f");
+    Cola cola;
+    int x;
+    int op;
+
+    do
+    {
+        menu();  cin>> op;
+
+        switch(op)
+        {
+            case 1: cout<< "\n\t INGRESE NUMERO A ENCOLAR: "; cin>> x;
+                    cola.Encolar(x);
+                    cout<<"\n\n\t\tNumero " << x << " ENCOLADO...\n\n";
+                    break;
+
+            case 2:
+                    if(cola.ColaVacia()==true)
+                        cout<<"\n\n\tCola Vacia....";
+                    else{
+                        x = cola.Desencolar( );
+                        cout<<"\n\n\tNumero "<<x<<" Desencolado\n";
+                        }
+                    break;
+
+
+            case 3:
+                    cout << "\n\n\t MOSTRANDO COLA\n\n";
+                    if(cola.ColaVacia()!=true)
+                        cola.MostrarCola(  );
+                    else
+                        cout<<"\n\n\tCola vacia..!"<<endl;
+                    break;
+
+
+            case 4:
+                    cola.VaciarCola(  );
+                    cout<<"\n\n\t\tCola eliminada...\n\n";
+                    break;
+
+            default: cout<<"\n\tIngrese una Opcion Valida....!!";
+         }
+
+        cout<<endl<<endl;
+        system("pause");  system("cls");
+
+    }while(op!=5);
+
+return 0;
+}
+//estructura
+#include<iostream>
+#include<conio.h>
+
+using namespace std;
+//Declarar estructura para Alumno
+struct Alumno{
+	char nombre[20];
+	int edad;
+	float promedio;
+}alumno[3];
+
+int main()
+{
+	int i, mayor=0, pos;
+	//Pedir los datos de los alumnos
+	for(i=0;i<3;i++){
+		fflush(stdin); //Vaciar buffer
+		cout<<"Nombre: "; cin.getline(alumno[i].nombre,20);
+		cout<<"Edad: "; cin>>alumno[i].edad;
+		cout<<"Promedio: "; cin>>alumno[i].promedio;
+		
+		//comprobar mejor promedio
+		if(alumno[i].promedio>mayor){
+			mayor=alumno[i].promedio; //asignamos el valor de promedio a variable "mayor"
+			pos=i; //guardar la posicion del prodio guardado.
+		}
+		cout<<"\n";
+	}
+	
+	//Imprimir datos del alumno con mejor promedio
+	cout<<"Alumno con el mejor promedio \n";
+	cout<<"Nombre: "<<alumno[pos].nombre<<endl;	
+	cout<<"Edad: "<<alumno[pos].edad<<endl;
+	cout<<"Promedio: "<<alumno[pos].promedio<<endl;
+	
+	getch();
+	return 0;
+}
+//pilas
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+struct nodo{
+    int nro;
+    struct nodo *sgte;
+};
+
+typedef struct nodo *Puntero;
+
+class Pila{
+    public:
+        Pila(void);
+        void Apilar(int );
+        int Desapilar(void );
+        void Cima(void);
+        bool PilaVacia(void);
+        void MostrarPila(void);
+        void DestruirPila(void);
+
+    private:
+        Puntero cima;
+
+};
+Pila::Pila(void){
+    cima=NULL;
+}
+
+bool Pila::PilaVacia(void){
+    if(cima==NULL)
+        return true;
+    else
+        return false;
+}
+
+void Pila::Apilar(int x){
+
+    Puntero p_aux;
+    p_aux=new(struct nodo);
+    p_aux->nro=x;
+    p_aux->sgte=cima;
+    cima=p_aux;
+
+}
+
+void Pila::Cima(){
+    int x;
+    if(cima==NULL)
+        cout<<"\n\n\tPila Vacia...!";
+
+    else {
+        x=cima->nro;
+        cout<<"\n\tLa Cima es :"<<x<<endl;
+    }
+}
+
+int Pila::Desapilar(void){
+    int x;
+    Puntero p_aux;
+    if(cima==NULL)
+        cout<<"\n\n\tPila Vacia...!!";
+    else{
+        p_aux=cima;
+        x=p_aux->nro;
+        cima=cima->sgte;
+        delete(p_aux);
+    }
+    return x;
+}
+
+void Pila::MostrarPila(void){
+    Puntero p_aux;
+    p_aux=cima;
+
+    while(p_aux!=NULL){
+        cout<<"\t "<<p_aux->nro<<endl;
+        p_aux=p_aux->sgte;
+    }
+}
+
+void Pila::DestruirPila(void){
+    Puntero p_aux;
+
+    while(cima!=NULL){
+            p_aux=cima;
+            cima=cima->sgte;
+            delete(p_aux);
+    }
+}
+void menu(void)
+{
+    cout<<"\t -------------------------------------------\n";
+    cout<<"\t|        IMPLEMENTACION DE UNA PILA         |\n";
+    cout<<"\t|-------------------------------------------|\n";
+    cout<<" \t|                                           |"<<endl;
+    cout<<" \t|  1. APILAR                                |"<<endl;
+    cout<<" \t|  2. DESAPILAR                             |"<<endl;
+    cout<<" \t|  3. MOSTRAR PILA                          |"<<endl;
+    cout<<" \t|  4. DESTRUIR PILA                         |"<<endl;
+    cout<<" \t|  5. MOSTRAR CIMA                          |"<<endl;
+    cout<<" \t|  6. SALIR                                 |"<<endl;
+    cout<<" \t|                                           |"<<endl;
+    cout<<"\t -------------------------------------------\n";
+    cout<<"\t Ingrese opcion: ";
+}
+
+int main(void ){
+
+    system("color 0a");
+    Pila pila;
+    int x;
+    int opc;
+
+    do
+    {
+        menu();  cin>> opc;
+
+        switch(opc)
+        {
+            case 1: cout<< "\n\t INGRESE NUMERO A APILAR: "; cin>> x;
+                    pila.Apilar(x);
+                    cout<<"\n\n\t\tNumero " << x << " apilado...\n\n";
+                    break;
+
+            case 2:
+                    if(pila.PilaVacia()==true)
+                        cout<<"\n\n\tPila Vacia....";
+                    else{
+                        x = pila.Desapilar( );
+                        cout<<"\n\n\tNumero "<<x<<" desapilado\n";
+                        }
+                    break;
+
+
+            case 3:
+                    cout << "\n\n\t MOSTRANDO PILA\n\n";
+                    if(pila.PilaVacia()!=true)
+                        pila.MostrarPila(  );
+                    else
+                        cout<<"\n\n\tPila vacia..!"<<endl;
+                    break;
+
+
+            case 4:
+                    pila.DestruirPila(  );
+                    cout<<"\n\n\t\tPila eliminada...\n\n";
+                    break;
+            case 5:
+                    pila.Cima();
+                    break;
+         }
+
+        cout<<endl<<endl;
+        system("pause");
+        system("cls");
+
+    }while(opc!=6);
+
+return 0;
+}
+//puntero
+#include<iostream>
+#include<conio.h>
+
+using namespace std;
+
+int main(){
+	int numeros[5], *dir_numeros, i;
+
+	for(i=0; i<5; i++){
+		cout<<"\tDigite  un numero ["<<i<<"]: ";
+		cin>>numeros[i];
+	}
+	//Posiscion de memoria donde comienza numeros
+	dir_numeros = numeros;
+
+	for(i=0; i<5; i++){
+		if(*dir_numeros%2==0){
+			cout<<"\n\tEl numero "<<*dir_numeros<<" es par"<<endl;
+			cout<<"\n\tPosicion: "<<&dir_numeros<<endl;
+
+		}
+		// La variable puntero incrementa a
+		//medida que el bucle avanza
+		dir_numeros++;
+	}
+
+	getch();
+	return 0;
+}
+//codigo hash
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+using namespace std;
+
+
+
+ struct Datos
+{
+    char Names[256];
+    struct Datos *next;
+    
+}typedef node;
+
+node *HashTable[1000];
+int tablesize=10;
+
+
+
+int stringtokey(char name[])
+{
+    int c,s=0;
+    int j=1;
+    // Strlen() Obtiene la longitud de un string
+    for(int i=0; i<strlen(name); i++)
+    {
+        c=name[i];  //Convierte cada caracter en su c�digo ASCII 
+        s=s+c;        // Se suma 
+    }
+    return s;
+}
+
+
+    void Addnode()
+    {
+    int ascii, key;
+    node *n1;
+    node *n2;
+    // La funci�n malloc() nos reserva una zona de memoria del tama�o que le indiquemos
+     //y nos devuelve su direcci�n. Podemos hacer que nuestro puntero apunte a esa direcci�n 
+    n1=(node *)malloc(sizeof(node));  
+    cout<<"Introduzca una cadena"<<endl;
+    cin>>n1->Names;
+
+    n1->next=NULL;
+    
+    
+    ascii=stringtokey(n1->Names);
+    key=ascii%tablesize; // Transformaci�n de clave
+        cout<<"Su clave Hash es ["<<key<<"]"<<endl;
+
+    
+    if(HashTable[key]==NULL)
+    {
+        HashTable[key]=n1;
+    }
+    else
+    {
+        
+        for(n2=HashTable[key];  n2->next!=NULL ;  n2=n2->next);  // Null statement
+        n2->next=n1;    
+                
+    }
+        
+    
+
+}
+
+
+int buscarnodo(char nName[])
+{
+    int ascii= stringtokey(nName);
+    int key=ascii%tablesize;
+    node *n;
+    for(n=HashTable[key]; n!=NULL; n=n->next)
+    {
+        if(strcmp(n->Names,nName)==0)
+        {
+            return key;
+        }
+    }
+    return -1;
+}
+
+
+void ImprimirLista(node *n)
+{
+    node *n1;
+    for(n1=n; n1!=NULL; n1=n1->next)
+    {
+        cout<<"["<<n1->Names<<"]";  
+    }
+}
+
+void ImprimirTabla()
+{
+    for(int i=0; i<tablesize; i++)
+    {
+        cout<<"\nTabla Hash["<<i<<"] ";
+        ImprimirLista(HashTable[i]);
+    }
+}
+
+void InciarTabla()
+{
+    for(int i=0; i<tablesize; i++)
+    {
+        HashTable[i] = NULL;
+    }   
+}
+
+void menu()
+{
+    
+    cout<<"                   ALGORITMOS Y ESTRUCTURAS DE DATOS"<<endl<<endl;
+    cout<<"              BUSQUEDA POR TRANSFORMADA DE CLAVE (HASHING)"<<endl<<endl;
+    
+    cout<<"      Menu de opciones "<<endl;
+    cout<<"    Ingresar una cadena [1]"<<endl;
+    cout<<"    Buscar una cadena[2]"<<endl;
+    cout<<"    Imprimir la tabla hash [3]"<<endl;
+    cout<<"    Salir [Presione otra tecla]"<<endl;
+    
+}
+
+
+
+int main()
+
+{
+   InciarTabla();
+menu();
+
+   int key,action=1;
+   char nName[265];
+   while((action==1) || (action==2)|| (action==3) )
+   {
+    
+       if(action==1)
+       {
+        Addnode();
+       }
+       
+       
+       
+        
+       
+       if (action==2)
+       {
+         cout<<"Introduzca la cadena a buscar"<<endl;
+         cin>>nName;
+         key=buscarnodo(nName);
+         if(key==-1)
+         {
+            cout<<"Esa cadena no se encuentra en la tabla"<<endl;
+            }
+            else
+            {
+                cout<<"Esa cadena se encuentra en la tabla"<<endl;
+                cout<<"HashTable["<<key<<"]"<<endl;
+                ImprimirLista(HashTable[key]); 
+            }
+       }
+       if(action==3)
+       {
+        ImprimirTabla();
+        
+       }
+      
+       cout<<"\nEscoja una opcion ";
+       cin>>action;
+   }
+   
+    return 0;
+}
